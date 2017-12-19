@@ -34,85 +34,6 @@ function SubmitData (form) {
     var MR_S=form.MR_S.value;
 
     document.getElementById('processit').innerHTML="Processing, please wait.......";
-    d3.json('/score/'+PopSize_S+","+O6_S+","+MR_S+","+MHP_S+","+SA_S+","+PopSize+","+O6+","+MR+","+MHP+","+SA, function(error, response) {        
-        
-        var resp=[];
-        resp=JSON.parse(response);
-        hello = [];
-        newCity = [];
-
-        for (var i=0; i< resp.length; i++){
-        
-          newCity.City = resp[i].City;
-          newCity.State = resp[i].State;
-          newCity.URL = resp[i].URL;
-          newCity.imgURL = resp[i].Img;
-          newCity.crime = resp[i].CrimeRate;
-          newCity.USNewsURL = resp[i].Link;
-          newCity.RtrmtRank= resp[i].RtrmtRank;
-          newCity.USNewsRank = resp[i].USNewsRank;
-          newCity.cPopulation = resp[i].cPopulation;
-          newCity.cOver_65 = resp[i].cOver_65;
-          newCity.cRent = resp[i].cRent;
-          newCity.cHome_Price = resp[i].cHome_Price;
-          newCity.uAssistance= resp[i].cAssistance;
-          newCity.Score= resp[i].Score;
-          newCity.places = document.createElement('div');
-
-          hello.push(newCity);            
-        }
-        hello=resp;
-        //rendertop===================================================================
-        console.log("Updating Page....")
-        document.getElementById('dynamic_elements').innerHTML="";
-
-        for (var i = 0; i < 5; i++) {
-
-            var City = hello[i].City;
-            var State = hello[i].State;
-            var URL = hello[i].URL;
-            var imgURL = hello[i].Img;
-            var crime = hello[i].CrimeRate;
-            var USNewsURL = hello[i].Link;
-            var RtrmtRank= hello[i].RtrmtRank;
-            var USNewsRank = hello[i].USNewsRank;
-            var uPopulation = hello[i].cPopulation;
-            var uPopulation = hello[i].cPopulation.toLocaleString();
-            var uOver_65 = hello[i].cOver_65;
-            var uRent = hello[i].cRent;
-            var uRent = hello[i].cRent.toLocaleString();
-            var uHome_Price = hello[i].cHome_Price;
-            var uHome_Price = hello[i].cHome_Price.toLocaleString();
-            var uAssistance= hello[i].cAssistance;
-            var Score= hello[i].Score;
-            var places = document.createElement('div');
-            places.className = 'places';
-            places.innerHTML = 
-
-            '<div class="container mainborder" style="padding-bottom:5px;"><div class="row bottomborder"> <div class="col-md-3 numberheader">' +RtrmtRank+
-            '</div><div class="col-md-9 cityheader"> ' + City + ', ' + State + 
-            '</div></div><div class="row"><div class="col-md-4 imgbox">' + '<img src="' + imgURL + '">' + 
-            '</div><div class="col-md-4"><div class="row t_0"><div class="col-md-9 t_1">Crime:</div><div class="col-md-3 t_2 bottomborder_1">' + crime +
-            '</div></div><div class="row"><div class="col-md-9 t_1">US News URL:</div><div class="col-md-3 t_2 bottomborder_1">' + '<a href="'+ USNewsURL + '">Link</a>' +
-            '</div></div><div class="row"><div class="col-md-9 t_1">Census URL:</div><div class="col-md-3 t_2 bottomborder_1">' + '<a href="'+URL+'">Link</a>' +
-            '</div></div><div class="row"><div class="col-md-9 score_1">US News Rank</div><div class="col-md-3 rank">' + USNewsRank +
-            '</div> </div></div><div class="col-md-4"><div class="row t_0a"><div class="col-md-9 t_1">Mean Rent:</div><div class="col-md-3 t_2 bottomborder_1"> $' + uRent +
-            '</div></div><div class="row"><div class="col-md-9 t_1">Mean Home Price:</div><div class="col-md-3 t_2 bottomborder_1"> $' + uHome_Price +
-            '</div></div><div class="row"><div class="col-md-9 t_1">Population:</div><div class="col-md-3 t_2 bottomborder_1">' + uPopulation +
-
-            '</div></div><div class="row"><div class="col-md-9 t_1">% Over 65:</div><div class="col-md-3 t_2 bottomborder_1">' + uOver_65 +
-            // '</div></div><div class="row"><div class="col-md-9 score_1">Match</div><div class="col-md-3 score">' + Math.floor(((1-Score) * 100)) +
-            '</div></div><div class="row"><div class="col-md-9 score_1">Closeness to Preference</div><div class="col-md-3 score bottomborder_1">' + Score.toFixed(3) +
-            '</div> </div> </div> </div></div>   <br><br>';
-
-            // document.getElementById('dynamic_elements').innerHTML("");
-            document.getElementById('dynamic_elements').appendChild(places);
-            document.getElementById("dynamic_elements").style.color = "#FFFFFF";        
-        }
-        
-    });
-    // setTimeout('delayscore()', 5000);
-
     d3.json('/usmap/', function(error, response) {
         
         var resp2=[];
@@ -206,6 +127,87 @@ function SubmitData (form) {
         document.getElementById('processit').innerHTML="";
         
     }); 
+    
+    d3.json('/score/'+PopSize_S+","+O6_S+","+MR_S+","+MHP_S+","+SA_S+","+PopSize+","+O6+","+MR+","+MHP+","+SA, function(error, response) {        
+        
+        var resp=[];
+        resp=JSON.parse(response);
+        hello = [];
+        newCity = [];
+
+        for (var i=0; i< resp.length; i++){
+        
+          newCity.City = resp[i].City;
+          newCity.State = resp[i].State;
+          newCity.URL = resp[i].URL;
+          newCity.imgURL = resp[i].Img;
+          newCity.crime = resp[i].CrimeRate;
+          newCity.USNewsURL = resp[i].Link;
+          newCity.RtrmtRank= resp[i].RtrmtRank;
+          newCity.USNewsRank = resp[i].USNewsRank;
+          newCity.cPopulation = resp[i].cPopulation;
+          newCity.cOver_65 = resp[i].cOver_65;
+          newCity.cRent = resp[i].cRent;
+          newCity.cHome_Price = resp[i].cHome_Price;
+          newCity.uAssistance= resp[i].cAssistance;
+          newCity.Score= resp[i].Score;
+          newCity.places = document.createElement('div');
+
+          hello.push(newCity);            
+        }
+        hello=resp;
+        //rendertop===================================================================
+        console.log("Updating Page....")
+        document.getElementById('dynamic_elements').innerHTML="";
+
+        for (var i = 0; i < 5; i++) {
+
+            var City = hello[i].City;
+            var State = hello[i].State;
+            var URL = hello[i].URL;
+            var imgURL = hello[i].Img;
+            var crime = hello[i].CrimeRate;
+            var USNewsURL = hello[i].Link;
+            var RtrmtRank= hello[i].RtrmtRank;
+            var USNewsRank = hello[i].USNewsRank;
+            var uPopulation = hello[i].cPopulation;
+            var uPopulation = hello[i].cPopulation.toLocaleString();
+            var uOver_65 = hello[i].cOver_65;
+            var uRent = hello[i].cRent;
+            var uRent = hello[i].cRent.toLocaleString();
+            var uHome_Price = hello[i].cHome_Price;
+            var uHome_Price = hello[i].cHome_Price.toLocaleString();
+            var uAssistance= hello[i].cAssistance;
+            var Score= hello[i].Score;
+            var places = document.createElement('div');
+            places.className = 'places';
+            places.innerHTML = 
+
+            '<div class="container mainborder" style="padding-bottom:5px;"><div class="row bottomborder"> <div class="col-md-3 numberheader">' +RtrmtRank+
+            '</div><div class="col-md-9 cityheader"> ' + City + ', ' + State + 
+            '</div></div><div class="row"><div class="col-md-4 imgbox">' + '<img src="' + imgURL + '">' + 
+            '</div><div class="col-md-4"><div class="row t_0"><div class="col-md-9 t_1">Crime:</div><div class="col-md-3 t_2 bottomborder_1">' + crime +
+            '</div></div><div class="row"><div class="col-md-9 t_1">US News URL:</div><div class="col-md-3 t_2 bottomborder_1">' + '<a href="'+ USNewsURL + '">Link</a>' +
+            '</div></div><div class="row"><div class="col-md-9 t_1">Census URL:</div><div class="col-md-3 t_2 bottomborder_1">' + '<a href="'+URL+'">Link</a>' +
+            '</div></div><div class="row"><div class="col-md-9 score_1">US News Rank</div><div class="col-md-3 rank">' + USNewsRank +
+            '</div> </div></div><div class="col-md-4"><div class="row t_0a"><div class="col-md-9 t_1">Mean Rent:</div><div class="col-md-3 t_2 bottomborder_1"> $' + uRent +
+            '</div></div><div class="row"><div class="col-md-9 t_1">Mean Home Price:</div><div class="col-md-3 t_2 bottomborder_1"> $' + uHome_Price +
+            '</div></div><div class="row"><div class="col-md-9 t_1">Population:</div><div class="col-md-3 t_2 bottomborder_1">' + uPopulation +
+
+            '</div></div><div class="row"><div class="col-md-9 t_1">% Over 65:</div><div class="col-md-3 t_2 bottomborder_1">' + uOver_65 +
+            // '</div></div><div class="row"><div class="col-md-9 score_1">Match</div><div class="col-md-3 score">' + Math.floor(((1-Score) * 100)) +
+            '</div></div><div class="row"><div class="col-md-9 score_1">Closeness to Preference</div><div class="col-md-3 score bottomborder_1">' + Score.toFixed(3) +
+            '</div> </div> </div> </div></div>   <br><br>';
+
+            // document.getElementById('dynamic_elements').innerHTML("");
+            document.getElementById('dynamic_elements').appendChild(places);
+            document.getElementById("dynamic_elements").style.color = "#FFFFFF";        
+        }
+        
+    });
+    // setTimeout('delayscore()', 5000);
+
+    
     // setTimeout('delayscore1()', 5000);   
     // setTimeout('delayscore2()', 5000);
 
