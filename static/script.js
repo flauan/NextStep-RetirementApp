@@ -62,7 +62,8 @@ function SubmitData (form) {
           hello.push(newCity);            
         }
         hello=resp;
-        rendertop();
+        // rendertop();
+        setTimeout('delayscore1()', 5000);
     });
     // setTimeout('delayscore()', 5000);
 
@@ -76,21 +77,29 @@ function SubmitData (form) {
         myMap.remove();   
         myMap = L.map("map", {center: [38.20, -95.71],zoom: 4});
 
-        mapit();
-        Plotly.deleteTraces("bargraph", 0);
-        barit();
-        document.getElementById('processit').innerHTML="";
+        // mapit();
+        // Plotly.deleteTraces("bargraph", 0);
+        // barit();    
+        setTimeout('delayscore2()', 5000);
     });    
 
 }
 
-function delayscore()
+function delayscore1()
 {
+    console.log("running delay1");
     rendertop();
+}
+
+function delayscore2()
+{
+    console.log("running delay2");
     mapit();
     Plotly.deleteTraces("bargraph", 0);
     barit();
+    document.getElementById('processit').innerHTML="";
 }
+
 
 function rendertop(){
     // console.log(hello[0]["RtrmtRank"])
