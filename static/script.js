@@ -63,7 +63,7 @@ function SubmitData (form) {
         }
         hello=resp;
         // rendertop();
-        setTimeout('delayscore1()', 5000);
+        
     });
     // setTimeout('delayscore()', 5000);
 
@@ -80,8 +80,10 @@ function SubmitData (form) {
         // mapit();
         // Plotly.deleteTraces("bargraph", 0);
         // barit();    
-        setTimeout('delayscore2()', 5000);
-    });    
+        
+    }); 
+    setTimeout('delayscore1()', 5000);   
+    setTimeout('delayscore2()', 5000);
 
 }
 
