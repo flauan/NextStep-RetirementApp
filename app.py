@@ -6,6 +6,7 @@ import sqlite3 as sql
 import pandas as pd  
 # from __future__ import print_function
 import sys
+import time
 
 
 app = Flask(__name__)
@@ -52,6 +53,17 @@ def scoredata(uPopulation,uOver_65,uRent,uHome_Price,uAssistance,wPopulation,wOv
     import math
 
     print("Running actual engine using input:")
+    print(uPopulation)
+    print(uOver_65)
+    print(uRent)
+    print(uHome_Price)
+    print(uAssistance)
+
+    print(wPopulation)
+    print(wOver_65)
+    print(wRent)
+    print(wHome_Price)
+    print(wAssistance)
 
 
     #1 Get Standardized Value
@@ -90,7 +102,9 @@ def scoredata(uPopulation,uOver_65,uRent,uHome_Price,uAssistance,wPopulation,wOv
         
     # 2 Apply Euclidean/Mahalanobis Distance Measure    
     print("Starting Euclid")
-
+    print(uPopulation)
+    print(meanPopulation)
+    print(stdvPopulation)
     zuPopulation=(uPopulation-meanPopulation)/stdvPopulation
     zuOver_65=(uOver_65-meanOver_65)/stdvOver_65
     zuRent=(uRent-meanRent)/stdvRent
@@ -124,7 +138,7 @@ def scoredata(uPopulation,uOver_65,uRent,uHome_Price,uAssistance,wPopulation,wOv
                         ((zuHome_Price-zcHome_Price)*wHome_Price)**2+   \
                         ((zuAssistance-zcAssistance)*wAssistance)**2   \
                         )
-
+        print("Score: "+row[6]+"  "+row[7]+" "+str(score))
 
         cityscore.append((row[6],row[7],row[8],row[9],row[10], \
                         uPopulation,uOver_65,uRent,uHome_Price,uAssistance, \
@@ -166,7 +180,7 @@ def scoredata(uPopulation,uOver_65,uRent,uHome_Price,uAssistance,wPopulation,wOv
         str(row[25])+","+\
         str(row[26])+","+\
         str(row[27])+")"
-        
+
         c.execute(query)
         conn.commit()     
 
@@ -198,7 +212,7 @@ def index():
 @app.route("/score/<ScoreParam>")
 def score(ScoreParam):
     print("Start Scoring Engine")
-    
+
     uList = ScoreParam.split(",")
 
     puPopulation=float(uList[0])
@@ -239,6 +253,7 @@ def score(ScoreParam):
 
 @app.route("/usmap/")
 def usmap():   
+    time.sleep(10)
     conn = sql.connect("./Datasets/RetirementDB.sqlite")
     c = conn.cursor()
 
