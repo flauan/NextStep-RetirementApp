@@ -32,8 +32,9 @@ function SubmitData (form) {
     var MHP_S=form.MHP_S.value;
     var  MR= form.MR.value;
     var MR_S=form.MR_S.value;
-   
-    d3.json('/score/'+PopSize_S+","+O6_S+","+MR_S+","+MHP_S+","+SA_S+","+PopSize+","+O6+","+MR+","+MHP+","+SA, function(error, response) {
+
+    document.getElementById('processit').innerHTML="Processing, please wait.......";
+    d3.json('/score/'+PopSize_S+","+O6_S+","+MR_S+","+MHP_S+","+SA_S+","+PopSize+","+O6+","+MR+","+MHP+","+SA, function(error, response) {        
         
         var resp=[];
         resp=JSON.parse(response);
@@ -59,7 +60,7 @@ function SubmitData (form) {
           newCity.places = document.createElement('div');
 
           hello.push(newCity);            
-        }  
+        }
         hello=resp;
         rendertop();
     });
@@ -73,20 +74,22 @@ function SubmitData (form) {
         
         output=resp2;
         myMap.remove();   
-        myMap = L.map("map", {
-        center: [38.20, -95.71],
-        zoom: 4
-        });
+        myMap = L.map("map", {center: [38.20, -95.71],zoom: 4});
+
         mapit();
         Plotly.deleteTraces("bargraph", 0);
         barit();
-    });
+        document.getElementById('processit').innerHTML="";
+    });    
+
 }
 
-function delayscore(){
-    // hello = [{"City":"New Haven","State":"CT","Latitude":41.3052226,"Longitude":-72.9268626,"URL":"https://www.census.gov/quickfacts/fact/table/newhavencityconnecticut,US/PST045216","uPopulation":10000,"uOver_65":15.0,"uRent":1200.0,"uHome_Price":130000.0,"uAssistance":143456.0,"zuPopulaton":-0.5571986901,"zuOver_65":-0.4555333433,"zuRent":1.1672829099,"zuHome_Price":-0.463681485,"zuAssistance":-0.6434261331,"cPopulation":129890,"cOver_65":9.2,"cRent":1121.0,"cHome_Price":190700.0,"cAssistance":2797865.0,"zcPopulation":-0.4172689859,"zcOver_65":-0.6616416553,"zcRent":0.8277071233,"zcHome_Price":-0.0075094634,"zcAssistance":-0.3304833417,"Score":0.4166943268,"ZipCode":"6510","USNewsRank":81,"RtrmtRank":1,"Img":"https://realestate.usnews.com/dims4/USNEWS/1a7893e/2147483647/resize/1024x280/crop/420x280+302+0/quality/85/?url=https://realestate.usnews.com/static-assets/cms/img/bestplaces/41452/CT_New_Haven_superhero_image.jpg","Link":"https://realestate.usnews.com/places/rankings/best-places-to-retire","CrimeRate":476.0},{"City":"Virginia Beach","State":"VA","Latitude":36.8643566,"Longitude":-75.9985693,"URL":"https://www.census.gov/quickfacts/fact/table/virginiabeachcityvirginia,US/PST045216","uPopulation":1234,"uOver_65":10.0,"uRent":1200.0,"uHome_Price":120000.0,"uAssistance":123456.0,"zuPopulaton":-0.5571986901,"zuOver_65":-0.4555333433,"zuRent":1.1672829099,"zuHome_Price":-0.463681485,"zuAssistance":-0.6434261331,"cPopulation":437907,"cOver_65":10.6,"cRent":1258.0,"cHome_Price":262200.0,"cAssistance":1959395.0,"zcPopulation":-0.0822614643,"zcOver_65":-0.3009521094,"zcRent":1.4165917153,"zcHome_Price":0.4538243349,"zcAssistance":-0.4285959125,"Score":0.5741958975,"ZipCode":"23451","USNewsRank":69,"RtrmtRank":2,"Img":"https://realestate.usnews.com/dims4/USNEWS/5fc4fb2/2147483647/resize/1024x280/crop/420x280+302+0/quality/85/?url=https://realestate.usnews.com/static-assets/cms/img/bestplaces/42005/VA_Virginia_Beach_superhero_image.jpg","Link":"https://realestate.usnews.com/places/rankings/best-places-to-retire","CrimeRate":159.3},{"City":"Orlando","State":"FL","Latitude":28.5416658,"Longitude":-81.3756862,"URL":"https://www.census.gov/quickfacts/fact/table/orlandocityflorida,US/PST045216","uPopulation":1234,"uOver_65":10.0,"uRent":1200.0,"uHome_Price":120000.0,"uAssistance":123456.0,"zuPopulaton":-0.5571986901,"zuOver_65":-0.4555333433,"zuRent":1.1672829099,"zuHome_Price":-0.463681485,"zuAssistance":-0.6434261331,"cPopulation":239057,"cOver_65":9.4,"cRent":1040.0,"cHome_Price":172100.0,"cAssistance":5000971.0,"zcPopulation":-0.298536039,"zcOver_65":-0.6101145773,"zcRent":0.4795344813,"zcHome_Price":-0.1275207732,"zcAssistance":-0.0726895109,"Score":0.722130082,"ZipCode":"32801","USNewsRank":40,"RtrmtRank":3,"Img":"https://realestate.usnews.com/dims4/USNEWS/e729fbd/2147483647/resize/1024x280/crop/420x280+302+0/quality/85/?url=https://realestate.usnews.com/static-assets/cms/img/bestplaces/41872/FL_Orlando_superhero_image.jpg","Link":"https://realestate.usnews.com/places/rankings/best-places-to-retire","CrimeRate":551.8},{"City":"Austin","State":"TX","Latitude":30.2729209,"Longitude":-97.7443863,"URL":"https://www.census.gov/quickfacts/fact/table/austincitytexas,US/PST045216","uPopulation":1234,"uOver_65":10.0,"uRent":1200.0,"uHome_Price":120000.0,"uAssistance":123456.0,"zuPopulaton":-0.5571986901,"zuOver_65":-0.4555333433,"zuRent":1.1672829099,"zuHome_Price":-0.463681485,"zuAssistance":-0.6434261331,"cPopulation":811045,"cOver_65":7.0,"cRent":1106.0,"cHome_Price":257800.0,"cAssistance":6609254.0,"zcPopulation":0.3235733974,"zcOver_65":-1.2284395132,"zcRent":0.7632307081,"zcHome_Price":0.4254345627,"zcAssistance":0.1155018133,"Score":0.7527040864,"ZipCode":"78701","USNewsRank":9,"RtrmtRank":4,"Img":"https://realestate.usnews.com/dims4/USNEWS/df3f300/2147483647/resize/1024x280/crop/420x280+302+0/quality/85/?url=https://realestate.usnews.com/static-assets/cms/img/bestplaces/41481/TX_Austin_superhero_image.jpg","Link":"https://realestate.usnews.com/places/rankings/best-places-to-retire","CrimeRate":312.7},{"City":"Modesto","State":"CA","Latitude":37.6697463,"Longitude":-120.9991032,"URL":"https://www.census.gov/quickfacts/fact/table/modestocitycalifornia,US/PST045216","uPopulation":1234,"uOver_65":10.0,"uRent":1200.0,"uHome_Price":120000.0,"uAssistance":123456.0,"zuPopulaton":-0.5571986901,"zuOver_65":-0.4555333433,"zuRent":1.1672829099,"zuHome_Price":-0.463681485,"zuAssistance":-0.6434261331,"cPopulation":203119,"cOver_65":11.7,"cRent":1034.0,"cHome_Price":208000.0,"cAssistance":2641840.0,"zcPopulation":-0.3376231683,"zcOver_65":-0.0175531804,"zcRent":0.4537439152,"zcHome_Price":0.1041139591,"zcAssistance":-0.3487404217,"Score":0.777544744,"ZipCode":"95350","USNewsRank":99,"RtrmtRank":5,"Img":"https://realestate.usnews.com/dims4/USNEWS/279c375/2147483647/resize/1024x280/crop/420x280+302+0/quality/85/?url=https://realestate.usnews.com/static-assets/cms/img/bestplaces/42031/CA_Modesto_superhero_image.jpg","Link":"https://realestate.usnews.com/places/rankings/best-places-to-retire","CrimeRate":484.7}]
-    alert("Update Top5")
+function delayscore()
+{
     rendertop();
+    mapit();
+    Plotly.deleteTraces("bargraph", 0);
+    barit();
 }
 
 function rendertop(){
