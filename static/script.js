@@ -6,9 +6,17 @@ center: [38.20, -95.71],
 zoom: 4
 });
 
+var maxBounds = [
+  [5.499550, -167.276413], //Southwest
+  [83.162102, -52.233040]  //Northeast
+];
+
+myMap.setMaxBounds(maxBounds);
+
 var mapBox = "https://api.mapbox.com/styles/v1/mapbox/outdoors-v10/tiles/256/{z}/{x}/{y}?" +
 "access_token=pk.eyJ1Ijoia2pnMzEwIiwiYSI6ImNpdGRjbWhxdjAwNG0yb3A5b21jOXluZTUifQ." +
 "T6YbdDixkOBWH_k9GbS8JQ";
+
 
 L.tileLayer(mapBox).addTo(myMap);   
 
@@ -26,7 +34,7 @@ function SubmitData (form) {
     var MR_S=form.MR_S.value;
    
     d3.json('/score/'+PopSize_S+","+O6_S+","+MR_S+","+MHP_S+","+SA_S+","+PopSize+","+O6+","+MR+","+MHP+","+SA, function(error, response) {
-        console.log(response);
+        
         var resp=[];
         resp=JSON.parse(response);
         hello = [];
@@ -58,7 +66,7 @@ function SubmitData (form) {
     // setTimeout('delayscore()', 5000);
 
     d3.json('/usmap/', function(error, response) {
-        console.log(response);
+        
         var resp2=[];
         resp2=JSON.parse(response);
         output = [];
@@ -87,7 +95,7 @@ function rendertop(){
     document.getElementById('dynamic_elements').innerHTML="";
 
     for (var i = 0; i < 5; i++) {
-        console.log(hello[i]);
+
         var City = hello[i].City;
         var State = hello[i].State;
         var URL = hello[i].URL;
@@ -133,8 +141,7 @@ function rendertop(){
 
 function mapit()
 {
-    console.log("Mapping IT")
-    console.log(output)
+    console.log("Mapping IT");
     // var mapBox = "https://api.mapbox.com/styles/v1/mapbox/outdoors-v10/tiles/256/{z}/{x}/{y}?" +
     // "access_token=pk.eyJ1Ijoia2pnMzEwIiwiYSI6ImNpdGRjbWhxdjAwNG0yb3A5b21jOXluZTUifQ." +
     // "T6YbdDixkOBWH_k9GbS8JQ";
@@ -147,12 +154,20 @@ function mapit()
 
    
     // Add a tile layer
-    L.tileLayer(mapBox).addTo(myMap);   
+    L.tileLayer(mapBox).addTo(myMap); 
+
+    var xmax=0;
+    // var xmin=0;
+    for (var x = 0; x < output.length; x++) {
+        // if (x==0){xmin=output[x].Score}
+        xmax=output[x].Score
+    }   
 
     // Define a markerSize function that will give each city a different radius based on its population
     function markerSize(score) {
     // return 60000 / score;
-    return score*115000;
+    // return score*115000;    
+    return (xmax-score)*150000;
     }
 
     // Each city object contains the city's name, location and population
@@ -198,7 +213,6 @@ for (var i=0; i< output.length; i++){
  }
     
 }
-console.log(cl);
  var trace = {
  x: xl,
  y: yl,
